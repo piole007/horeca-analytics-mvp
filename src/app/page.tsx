@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
 
 export default function Home() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,14 +14,18 @@ export default function Home() {
 
         if (error) {
           console.error("Connection error:", error);
-          setError(`Error connecting to Supabase: ${error.message}`);
+          setError(
+            error
+              ? `Error connecting to Supabase: ${error.message}`
+              : "Unknown error occured"
+          );
         } else {
           console.log("Connection successful:", data);
           setData("Connection to Supabase successful!");
         }
       } catch (err) {
         console.error("Error in fetching connection data:", err);
-        setError(`Error connecting to Supabase: ${err.message}`);
+        setError("Error connecting to Supabase");
       } finally {
         setLoading(false);
       }
