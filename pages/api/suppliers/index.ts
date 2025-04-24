@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest,
 
         const {data, error} = await supabase
         .from("suppliers")
-        .select("supplier_name, contact_person, phone, email, address, notes")
+        .select("supplier_id, supplier_name, contact_person, phone, email, address, notes")
         .range(start, end);
 
         if (error) {
@@ -19,8 +19,7 @@ export default async function handler(req: NextApiRequest,
         }
         return res.status(200).json(data);
 
-    } else if (req.method === "POST") {
-              
+    } else if (req.method === "POST") {     
         const { supplier_name, contact_person, phone, email, address, notes } = req.body;
 
         // Input validation
